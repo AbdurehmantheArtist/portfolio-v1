@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Abdurehman Arts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Base Styles - Consistent with Homepage */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary-color: #2a2a2a;
+            --accent-color: #c5a47e;
+            --text-light: #ffffff;
+        }
+
+        body {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        /* Navigation - Same as Homepage */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(42, 42, 42, 0.95);
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Gallery Page Specific Styles */
+        .gallery-page {
+            padding: 120px 5% 50px;
+        }
+
+        .gallery-controls {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 1.5rem;
+            margin: 0 0.5rem;
+            background: transparent;
+            border: 2px solid var(--accent-color);
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 30px;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--accent-color);
+            color: var(--primary-color);
+        }
+
+        .masonry-grid {
+            column-count: 3;
+            column-gap: 1.5rem;
+        }
+
+        .gallery-item {
+            break-inside: avoid;
+            margin-bottom: 1.5rem;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.03);
+        }
+
+        .artwork-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .gallery-item:hover .artwork-info {
+            opacity: 1;
+        }
+
+        /* Lightbox Styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            padding: 2rem;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            margin: 2rem auto;
+        }
+
+        .lightbox-img {
+            width: 100%;
+            height: auto;
+            max-height: 80vh;
+            object-fit: contain;
+        }
+
+        .lightbox-details {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .masonry-grid {
+                column-count: 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .masonry-grid {
+                column-count: 1;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">Abdurehman Arts</a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="#gallery" class="active">Gallery</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Gallery Section -->
+    <section class="gallery-page">
+        <div class="gallery-controls">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="paintings">Paintings</button>
+            <button class="filter-btn" data-filter="3D Modellings">3D Modelling</button>
+            <button class="filter-btn" data-filter="drawings">Drawings</button>
+        </div>
+
+        <div class="masonry-grid">
+            <!-- Artwork Items - Add your artworks here -->
+            <div class="gallery-item" data-category="drawings">
+                <img src="pictures art\IMG20221123142516.jpg" alt="Artwork Title">
+                <div class="artwork-info">
+                    <h4>Quid and Iqbal</h4>
+                    <p>Medium: Graphite pencils</p>
+                    <p>Dimensions:  27.94 x 35.56 cm</p>
+                    <p>Year: 2023</p>
+                </div>
+            </div>
+
+                            <!-- Artwork Items - Add your artworks here -->
+                            <div class="gallery-item" data-category="drawings">
+                                <img src="pictures art\ddd.jpg" alt="Artwork Title">
+                                <div class="artwork-info">
+                                    <h4>The shepherdess</h4>
+                                    <p>Medium: colour pencils</p>
+                                    <p>Dimensions:  27.94 x 35.56 cm</p>
+                                    <p>Year: 2023</p>
+                                </div>
+                            </div>
+
+            <div class="gallery-item" data-category="drawings">
+                <img src="pictures art\thmbnl2.jpg" alt="Artwork Title">
+                <div class="artwork-info">
+                    <h4>Lionel Messi</h4>
+                    <p>Medium: Graphite </p>
+                    <p>Dimensions: 21 x 29.7 cm</p>
+                    <p>Year: 2024</p>
+                </div>
+            </div>
+            <div class="gallery-item" data-category="drawings">
+                <img src="pictures art\wadm2.jpg" alt="Artwork Title">
+                <div class="artwork-info">
+                    <h4>Wednesday</h4>
+                    <p>Medium: Ball point pen</p>
+                    <p>Dimensions: A5</p>
+                    <p>Year: 2023</p>
+                </div>
+            </div>
+
+            <div class="gallery-item" data-category="drawings">
+                <img src="pictures art\The other side.jpg" alt="Artwork Title">
+                <div class="artwork-info">
+                    <h4>THe Other side</h4>
+                    <p>Medium: Colour Pencil</p>
+                    <p>Dimensions: NA</p>
+                    <p>Year: 2024</p>
+                </div>
+            </div>
+            <div class="gallery-item" data-category="drawings">
+                <img src="pictures art\JOhn wick.jpg" alt="Artwork Title">
+                <div class="artwork-info">
+                    <h4>John wick</h4>
+                    <p>Medium: Graphite pencils</p>
+                    <p>Dimensions:  27.94 x 35.56 cm</p>
+                    <p>Year: 2024</p>
+                </div>
+            </div>
+            <div class="gallery-item" data-category="drawings">
+                <img src="pictures art\Inocent grl.jpg" alt="Artwork Title">
+                <div class="artwork-info">
+                    <h4>Inocent Girl</h4>
+                    <p>Medium: Colour pencils</p>
+                    <p>Dimensions:  27.94 x 35.56 cm</p>
+                    <p>Year: 2024</p>
+                </div>
+            </div>
+            <div class="gallery-item" data-category="drawings">
+                <img src="pictures art\BAbar Azam.jpg" alt="Artwork Title">
+                <div class="artwork-info">
+                    <h4> Babar Azam</h4>
+                    <p>Medium: Colour pencils</p>
+                    <p>Dimensions:  27.94 x 35.56 cm</p>
+                    <p>Year: 2024</p>
+                </div>
+            </div>
+            <div class="gallery-item" data-category="drawings">
+                <img src="pictures art\Arshad nadeem.jpg" alt="Artwork Title">
+                <div class="artwork-info">
+                    <h4>Arshad Nadeem</h4>
+                    <p>Medium: Colour pencils</p>
+                    <p>Dimensions:  27.94 x 35.56 cm</p>
+                    <p>Year: 2024</p>
+                </div>
+            </div>
+            <div class="gallery-item" data-category="drawings">
+                <img src="pictures art\loki.jpg" alt="Artwork Title">
+                <div class="artwork-info">
+                    <h4>Loki</h4>
+                    <p>Medium: Colour Pencil</p>
+                    <p>Dimensions: 21 x 29.7 cm</p>
+                    <p>Year: 2022</p>
+                </div>
+            </div>
+            <div class="gallery-item" data-category="drawings">
+                <img src="pictures art\mario.jpg" alt="Artwork Title">
+                <div class="artwork-info">
+                    <h4>Mario</h4>
+                    <p>Medium: Graphite pencils</p>
+                    <p>Dimensions:  27.94 x 35.56 cm</p>
+                    <p>Year: 2024</p>
+                </div>
+            </div>
+            <div class="gallery-item" data-category="drawings">
+                <img src="pictures art\THe baby.jpg" alt="Artwork Title">
+                <div class="artwork-info">
+                    <h4>The baby</h4>
+                    <p>Medium: Colour Pencil</p>
+                    <p>Dimensions: 21 x 29.7 cm</p>
+                    <p>Year: 2024</p>
+                </div>
+            </div>
+            <div class="gallery-item" data-category="drawings">
+                <img src="pictures art\The toddler.jpg" alt="Artwork Title">
+                <div class="artwork-info">
+                    <h4>The toddler</h4>
+                    <p>Medium: Colour Pencil</p>
+                    <p>Dimensions: 21 x 29.7 cm</p>
+                    <p>Year: 2024</p>
+                </div>
+            </div>
+            <div class="gallery-item" data-category="drawings">
+                <img src="pictures art\THe Judge.jpg" alt="Artwork Title">
+                <div class="artwork-info">
+                    <h4>The Judge</h4>
+                    <p>Medium: Graphite Pencil</p>
+                    <p>Dimensions: 21 x 29.7 cm</p>
+                    <p>Year: 2025</p>
+                </div>
+            </div>
+            <div class="gallery-item" data-category="drawings">
+                <img src="pictures art\IK KHAn.jpg" alt="Artwork Title">
+                <div class="artwork-info">
+                    <h4>Imran Khan</h4>
+                    <p>Medium: Graphite pencils</p>
+                    <p>Dimensions:  27.94 x 35.56 cm</p>
+                    <p>Year: 2023</p>
+                </div>
+            </div>
+            <div class="gallery-item" data-category="drawings">
+                <img src="pictures art\ink Anime.jpg" alt="Artwork Title">
+                <div class="artwork-info">
+                    <h4>Tanjiro</h4>
+                    <p>Medium: Graphite pencils</p>
+                    <p>Dimensions:  27.94 x 35.56 cm</p>
+                    <p>Year: 2023</p>
+                </div>
+            </div>
+            <div class="gallery-item" data-category="drawings">
+                <img src="pictures art\CArnage.jpg" alt="Artwork Title">
+                <div class="artwork-info">
+                    <h4>CARNAGE</h4>
+                    <p>Medium: Colour Pencil and Marker</p>
+                    <p>Dimensions: NA</p>
+                    <p>Year: 2022</p>
+                </div>
+            </div>
+            <div class="gallery-item" data-category="drawings">
+                <img src="pictures art\FLash.jpg" alt="Artwork Title">
+                <div class="artwork-info">
+                    <h4>Flash</h4>
+                    <p>Medium: Graphite pencils</p>
+                    <p>Dimensions:  27.94 x 35.56 cm</p>
+                    <p>Year: 2024</p>
+                </div>
+            </div>
+            <div class="gallery-item" data-category="drawings">
+                <img src="pictures art\alita.jpg" alt="Artwork Title">
+                <div class="artwork-info">
+                    <h4>Alita</h4>
+                    <p>Medium: Graphite pencils</p>
+                    <p>Dimensions:  27.94 x 35.56 cm</p>
+                    <p>Year: 2024</p>
+                </div>
+            </div>
+            <div class="gallery-item" data-category="drawings">
+                <img src="pictures art\minion.jpg" alt="Artwork Title">
+                <div class="artwork-info">
+                    <h4>MINION</h4>
+                    <p>Medium: Colour Pencil</p>
+                    <p>Dimensions: 21 x 29.7 cm</p>
+                    <p>Year: 2024</p>
+                </div>
+            </div>
+
+
+
+
+
+
+            <!-- Add more artwork items following the same structure -->
+            <!-- Example item -->
+            <div class="gallery-item" data-category="3D Modellings">
+                <img src="pictures art\footwear 2.png" alt="3D Modelling">
+                <div class="artwork-info">
+                    <h4>Footwear 1</h4>
+                    <p>Medium: Blender 3d moddelling </p>
+                    <p>Year: 2024</p>
+                </div>
+            </div>
+
+            <div class="gallery-item" data-category="3D Modellings">
+                <img src="pictures art\FOOTWEAR  TURQOISE.png" alt="3D Modelling">
+                <div class="artwork-info">
+                    <h4>Footwear 2</h4>
+                    <p>Medium: Blender 3d moddelling </p>
+                    <p>Year: 2024</p>
+                </div>
+
+            </div>
+
+            <div class="gallery-item" data-category="3D Modellings">
+                <img src="pictures art\fmale9.png" alt="3D Modelling">
+                <div class="artwork-info">
+                    <h4>Footwear female</h4>
+                    <p>Medium: Blender 3d moddelling </p>
+                    <p>Year: 2024</p>
+                </div>
+
+            </div>
+
+            <div class="gallery-item" data-category="3D Modellings">
+                <img src="pictures art\footshoe 1 (2).png" alt="3D Modelling">
+                <div class="artwork-info">
+                    <h4>Footwear 3</h4>
+                    <p>Medium: Blender 3d moddelling </p>
+                    <p>Year: 2024</p>
+                </div>
+
+            </div>
+
+            <div class="gallery-item" data-category="3D Modellings">
+                <img src="pictures art\sneakr 4.png" alt="3D Modelling">
+                <div class="artwork-info">
+                    <h4>Footwear 4</h4>
+                    <p>Medium: Blender 3d moddelling </p>
+                    <p>Year: 2024</p>
+                </div>
+
+            </div>
+
+            <div class="gallery-item" data-category="3D Modellings">
+                <img src="pictures art\malewer1.png" alt="3D Modelling">
+                <div class="artwork-info">
+                    <h4>Footwear 5</h4>
+                    <p>Medium: Blender 3d moddelling </p>
+                    <p>Year: 2024</p>
+                </div>
+
+            </div>
+
+            <div class="gallery-item" data-category="3D Modellings">
+                <img src="pictures art\hwear1.png" alt="3D Modelling">
+                <div class="artwork-info">
+                    <h4>Footwear 6</h4>
+                    <p>Medium: Blender 3d moddelling </p>
+                    <p>Year: 2024</p>
+                </div>
+
+            </div>
+
+            <div class="gallery-item" data-category="3D Modellings">
+                <img src="pictures art\WOR1.png" alt="3D Modelling">
+                <div class="artwork-info">
+                    <h4>F 7</h4>
+                    <p>Medium: Blender 3d moddelling </p>
+                    <p>Year: 2025</p>
+                </div>
+
+            </div>
+
+            <div class="gallery-item" data-category="3D Modellings">
+                <img src="pictures art\FOOTWEAR  WHITE.png" alt="3D Modelling">
+                <div class="artwork-info">
+                    <h4>Footwear 2 White</h4>
+                    <p>Medium: Blender 3d moddelling </p>
+                    <p>Year: 2024</p>
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+        <!-- Lightbox -->
+        <div class="lightbox">
+            <span class="close-btn">&times;</span>
+            <div class="lightbox-content">
+                <img class="lightbox-img" src="" alt="Enlarged Artwork">
+                <div class="lightbox-details">
+                    <h3 class="artwork-title"></h3>
+                    <p class="artwork-medium"></p>
+                    <p class="artwork-dimensions"></p>
+                    <p class="artwork-year"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer - Same as Homepage -->
+    <footer id="contact">
+        <h3>Connect With Us</h3>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+        </div>
+        <p>&copy; 2023 Abdurehman Arts. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Filter Functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const filter = btn.dataset.filter;
+                
+                galleryItems.forEach(item => {
+                    if (filter === 'all' || item.dataset.category === filter) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Lightbox Functionality
+        const lightbox = document.querySelector('.lightbox');
+        const closeBtn = document.querySelector('.close-btn');
+        const lightboxImg = document.querySelector('.lightbox-img');
+        const artworkTitle = document.querySelector('.artwork-title');
+        const artworkMedium = document.querySelector('.artwork-medium');
+        const artworkDimensions = document.querySelector('.artwork-dimensions');
+        const artworkYear = document.querySelector('.artwork-year');
+
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const imgSrc = item.querySelector('img').src;
+                const info = item.querySelector('.artwork-info');
+                
+                lightboxImg.src = imgSrc;
+                artworkTitle.textContent = info.querySelector('h4').textContent;
+                artworkMedium.textContent = info.querySelector('p:nth-child(2)').textContent;
+                artworkDimensions.textContent = info.querySelector('p:nth-child(3)').textContent;
+                artworkYear.textContent = info.querySelector('p:nth-child(4)').textContent;
+                
+                lightbox.style.display = 'block';
+            });
+        });
+
+        // Close lightbox
+        closeBtn.addEventListener('click', () => {
+            lightbox.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.style.display = 'none';
+            }
+        });
+
+        // Back to Home navigation
+        document.querySelector('.logo').addEventListener('click', () => {
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>
